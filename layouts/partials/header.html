@@ -3,7 +3,7 @@
 <div class="header-menu" id="J_header">
   <ul class="header-item-container">
     <li class="header-item-title {{ $homeActive }}">
-      <a href="{{ `/` | relURL }}" class="title">{{ site.Title }}</a>
+      <a href="{{ site.Home.RelPermalink }}" class="title">{{ site.Title }}</a>
     </li>
 
     {{ range site.Menus.main }}

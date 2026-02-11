@@ -51,10 +51,10 @@
   <script src="{{ `js/lazysizes.min.js` | relURL }}" async defer></script>
   {{ end }}
 
-  {{ $favicon := site.Params.favicon | default "/favicon.svg" }}
-  <link rel="icon" href="{{ $favicon | relURL }}">
-  <link rel="icon" type="image/svg+xml" href="{{ $favicon | relURL }}">
-  <link rel="shortcut icon" href="{{ $favicon | relURL }}">
+  {{ $favicon := site.Params.favicon | default "favicon.svg" }}
+  <link rel="icon" href="{{ $favicon | absURL }}">
+  <link rel="icon" type="image/svg+xml" href="{{ $favicon | absURL }}">
+  <link rel="shortcut icon" href="{{ $favicon | absURL }}">
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta http-equiv="cleartype" content="on">
@@ -66,13 +66,17 @@
   <link href="{{ .RelPermalink }}" type="{{ .MediaType.Type }}" rel="alternate" title="{{ site.Title }} Feed">
   {{ end }}
 
-  {{ if and (ne site.Params.analytics.googleAnalyticsID "") (or hugo.IsProduction (eq site.Params.env "production")) }}
-  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.Params.analytics.googleAnalyticsID }}"></script>
+  {{ $gaID := "" }}
+  {{ with site.Params.analytics }}
+    {{ $gaID = .googleAnalyticsID | default "" }}
+  {{ end }}
+  {{ if and (ne $gaID "") (or hugo.IsProduction (eq site.Params.env "production")) }}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ $gaID }}"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', '{{ site.Params.analytics.googleAnalyticsID }}');
+    gtag('config', '{{ $gaID }}');
   </script>
   {{ end }}
 
