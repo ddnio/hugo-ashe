@@ -1,16 +1,33 @@
 {{ define "main" }}
+{{ $categories := .GetTerms "categories" }}
+{{ $tags := .GetTerms "tags" }}
+{{ $categoryKeys := dict }}
+{{ with $categories }}
+  {{ range . }}
+    {{ $categoryKeys = merge $categoryKeys (dict (.LinkTitle | lower) true) }}
+  {{ end }}
+{{ end }}
+{{ $displayTags := slice }}
+{{ with $tags }}
+  {{ range . }}
+    {{ $tagKey := .LinkTitle | lower }}
+    {{ if not (index $categoryKeys $tagKey) }}
+      {{ $displayTags = $displayTags | append . }}
+    {{ end }}
+  {{ end }}
+{{ end }}
 <article class="hentry">
   <div class="entry-content heti">
     <h1 class="post-title entry-title">{{ .Title }}</h1>
     {{ if eq .Section "posts" }}
     <h4 class="page-info">
-      {{ with .GetTerms "categories" }}
+      {{ with $categories }}
       <span class="page-info-taxonomy">
         Categories:
         {{ range $index, $term := . }}{{ if gt $index 0 }} · {{ end }}<a href="{{ $term.RelPermalink }}">{{ $term.LinkTitle }}</a>{{ end }}
       </span>
       {{ end }}
-      {{ with .GetTerms "tags" }}
+      {{ with $displayTags }}
       <span class="page-info-taxonomy">
         Tags:
         {{ range $index, $term := . }}{{ if gt $index 0 }} · {{ end }}<a href="{{ $term.RelPermalink }}">#{{ $term.LinkTitle }}</a>{{ end }}

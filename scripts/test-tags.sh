@@ -12,8 +12,8 @@ if ! grep -q '"tags":' "$BUILD_DIR/index.json"; then
   exit 1
 fi
 
-if ! grep -q '/tags/hugo/' "$BUILD_DIR/posts/quickstart-hugo-ashe/index.html"; then
-  echo "expected tag link in single post page"
+if ! grep -q '/tags/quickstart/' "$BUILD_DIR/posts/quickstart-hugo-ashe/index.html"; then
+  echo "expected tag link in single post page metadata"
   exit 1
 fi
 
@@ -34,6 +34,39 @@ fi
 
 if grep -q 'post-card' "$BUILD_DIR/tags/index.html"; then
   echo "expected tags index to render terms, not post cards"
+  exit 1
+fi
+
+if grep -q '/tags/theme/' "$BUILD_DIR/index.html"; then
+  echo "expected overlapping tag '#Theme' to be hidden on post list"
+  exit 1
+fi
+
+if grep -q '/tags/guide/' "$BUILD_DIR/index.html"; then
+  echo "expected overlapping tag '#Guide' to be hidden on post list"
+  exit 1
+fi
+
+HUGO_TAG_COUNT="$( (grep -o '/tags/hugo/' "$BUILD_DIR/index.html" || true) | wc -l | tr -d ' ')"
+if [[ "$HUGO_TAG_COUNT" != "1" ]]; then
+  echo "expected exactly one visible '#Hugo' tag on post list, got $HUGO_TAG_COUNT"
+  exit 1
+fi
+
+QUICKSTART_META="$(sed -n '/<h4 class=page-info>/,/<\/h4>/p' "$BUILD_DIR/posts/quickstart-hugo-ashe/index.html")"
+if echo "$QUICKSTART_META" | grep -q '/tags/hugo/'; then
+  echo "expected overlapping '#Hugo' to be hidden in quickstart post metadata"
+  exit 1
+fi
+
+TOOLKIT_META="$(sed -n '/<h4 class=page-info>/,/<\/h4>/p' "$BUILD_DIR/posts/hugo-ashe-theme-toolkit/index.html")"
+if echo "$TOOLKIT_META" | grep -q '/tags/theme/'; then
+  echo "expected overlapping '#Theme' to be hidden in toolkit post metadata"
+  exit 1
+fi
+
+if echo "$TOOLKIT_META" | grep -q '/tags/guide/'; then
+  echo "expected overlapping '#Guide' to be hidden in toolkit post metadata"
   exit 1
 fi
 

@@ -4,6 +4,21 @@
     {{ $summary := .Params.summary | default (.Summary | plainify | truncate 180) }}
     {{ $categories := .GetTerms "categories" }}
     {{ $tags := .GetTerms "tags" }}
+    {{ $categoryKeys := dict }}
+    {{ with $categories }}
+      {{ range . }}
+        {{ $categoryKeys = merge $categoryKeys (dict (.LinkTitle | lower) true) }}
+      {{ end }}
+    {{ end }}
+    {{ $displayTags := slice }}
+    {{ with $tags }}
+      {{ range . }}
+        {{ $tagKey := .LinkTitle | lower }}
+        {{ if not (index $categoryKeys $tagKey) }}
+          {{ $displayTags = $displayTags | append . }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
     <article class="hentry post-card">
       <h2 class="entry-title">
         <a href="{{ .RelPermalink }}" rel="bookmark" title="{{ .Title }}" itemprop="url" class="post-card-link header-href">{{ .Title }}</a>
@@ -11,12 +26,12 @@
       <div class="entry-content">
         <span>【{{ .Date.Format "2006-01-02" }}】</span>{{ $summary }}
       </div>
-      {{ if or $categories $tags }}
+      {{ if or $categories $displayTags }}
       <div class="entry-taxonomies">
         {{ with $categories }}
           {{ range . }}<a class="entry-taxonomy entry-category" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}
         {{ end }}
-        {{ with $tags }}
+        {{ with $displayTags }}
           {{ range . }}<a class="entry-taxonomy entry-tag" href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a>{{ end }}
         {{ end }}
       </div>
