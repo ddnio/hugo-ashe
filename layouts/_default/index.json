@@ -7,6 +7,7 @@
     "url": {{ $post.RelPermalink | jsonify }},
     "date": {{ ($post.Date.Format "2006-01-02") | jsonify }},
     "categories": {{ ($post.Params.categories | default (slice)) | jsonify }},
+    "tags": {{ ($post.Params.tags | default (slice)) | jsonify }},
     "summary": {{ (($post.Params.summary | default "") | plainify) | jsonify }},
     "content": {{ ($post.Plain | truncate 300) | jsonify }},
     "lang": {{ ($post.Lang | default site.LanguageCode | default "zh-CN") | jsonify }}

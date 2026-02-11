@@ -157,10 +157,12 @@
       const summary = String(post.summary || '').toLowerCase();
       const content = String(post.content || '').toLowerCase();
       const categories = Array.isArray(post.categories) ? post.categories : [];
+      const tags = Array.isArray(post.tags) ? post.tags : [];
       return title.includes(query) ||
              summary.includes(query) ||
              content.includes(query) ||
-             categories.some(cat => String(cat).toLowerCase().includes(query));
+             categories.some(cat => String(cat).toLowerCase().includes(query)) ||
+             tags.some(tag => String(tag).toLowerCase().includes(query));
     });
 
     displayResults(results, query);
@@ -182,7 +184,9 @@
 
     const html = results.slice(0, 10).map((post, index) => {
       const categories = Array.isArray(post.categories) ? post.categories : [];
+      const tags = Array.isArray(post.tags) ? post.tags : [];
       const category = categories[0] || '';
+      const tag = tags[0] || '';
       const safeURL = escapeHtml(post.url || '#');
       const highlightedTitle = highlightText(escapeHtml(post.title || ''), query);
       const highlightedSummary = highlightText(
@@ -190,6 +194,7 @@
         query
       );
       const safeCategory = escapeHtml(category);
+      const safeTag = escapeHtml(tag);
       const safeDate = escapeHtml(post.date || '');
 
       return `
@@ -200,6 +205,7 @@
           </div>
           <div class="search-result-meta">
             ${safeCategory ? `<span class="search-result-category">${safeCategory}</span>` : ''}
+            ${safeTag ? `<span class="search-result-tag">#${safeTag}</span>` : ''}
             <span class="search-result-date">${safeDate}</span>
           </div>
         </a>

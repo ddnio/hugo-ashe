@@ -24,3 +24,7 @@ jobs:
       - name: Build example site
         run: |
           hugo --source exampleSite --themesDir ../.. --theme hugo-ashe --minify
+
+      - name: Verify tag pages
+        run: |
+          ./scripts/test-tags.sh

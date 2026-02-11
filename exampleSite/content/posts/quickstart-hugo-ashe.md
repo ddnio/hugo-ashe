@@ -2,6 +2,7 @@
 title = "10 分钟上手：用 hugo-ashe 搭建个人网站"
 date = "2026-02-11T10:00:00+08:00"
 categories = ["Hugo", "Theme"]
+tags = ["hugo", "quickstart"]
 summary = "从安装主题到本地预览，快速完成 hugo-ashe 的最小可用配置。"
 +++
 

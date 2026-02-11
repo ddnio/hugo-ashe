@@ -2,6 +2,7 @@
 title = "hugo-ashe 主题工具箱介绍"
 date = "2026-02-11T11:00:00+08:00"
 categories = ["Guide", "Theme"]
+tags = ["hugo", "theme", "guide"]
 summary = "定位、能力、工作流与部署方式，一文了解 hugo-ashe。"
 +++
 

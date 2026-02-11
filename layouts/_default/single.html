@@ -4,7 +4,18 @@
     <h1 class="post-title entry-title">{{ .Title }}</h1>
     {{ if eq .Section "posts" }}
     <h4 class="page-info">
-      {{ with .Params.categories }}<span>Categories: {{ delimit . `, ` }}</span>{{ end }}
+      {{ with .GetTerms "categories" }}
+      <span class="page-info-taxonomy">
+        Categories:
+        {{ range $index, $term := . }}{{ if gt $index 0 }} · {{ end }}<a href="{{ $term.RelPermalink }}">{{ $term.LinkTitle }}</a>{{ end }}
+      </span>
+      {{ end }}
+      {{ with .GetTerms "tags" }}
+      <span class="page-info-taxonomy">
+        Tags:
+        {{ range $index, $term := . }}{{ if gt $index 0 }} · {{ end }}<a href="{{ $term.RelPermalink }}">#{{ $term.LinkTitle }}</a>{{ end }}
+      </span>
+      {{ end }}
       <time datetime="{{ .Date.Format `2006-01-02T15:04:05-07:00` }}">{{ .Date.Format "2006-01-02" }}</time>
       {{ if site.Params.busuanzi.enable }}
       <span id="busuanzi_value_page_pv">-</span> 次阅读

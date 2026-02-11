@@ -28,7 +28,7 @@
 ## 功能概览
 
 - 内容流式首页（文章列表 + 分页）
-- 文章详情页（分类 + Read More）
+- 文章详情页（分类/标签 + Read More）
 - 站内搜索（基于 `index.json`）
 - 图片灯箱（PhotoSwipe）
 - 代码块复制按钮
@@ -126,6 +126,23 @@ github = "your-github-id"
 twitter = "your-twitter-id"
 repo = "your-github-id/your-repo"
 ```
+
+### 文章分类与标签
+
+```toml
++++
+title = "我的文章"
+date = "2026-02-11T10:00:00+08:00"
+categories = ["Hugo", "Theme"]
+tags = ["hugo", "quickstart"]
++++
+```
+
+主题会自动生成：
+
+- 标签页：`/tags/`
+- 标签详情页：`/tags/<tag>/`
+- 单篇与列表页中的标签入口
 
 ## 主题开发
 
