@@ -1,14 +1,14 @@
 name = "hugo-ashe"
 license = "MIT"
-licenselink = "https://github.com/nio/hugo-ashe/blob/main/LICENSE"
+licenselink = "https://github.com/ddnio/hugo-ashe/blob/main/LICENSE"
 description = "A Hugo website theme toolkit focused on content-first writing, built-in search, and clean reading experience."
-homepage = "https://github.com/nio/hugo-ashe"
-demosite = "https://nio.github.io/hugo-ashe/"
+homepage = "https://github.com/ddnio/hugo-ashe"
+demosite = "https://ddnio.github.io/hugo-ashe/"
 min_version = "0.127.0"
 tags = ["blog", "personal", "portfolio", "search", "giscus", "lightweight"]
 features = ["responsive", "search", "comments", "syntax-highlighting", "photoswipe", "copy-code"]
 
 authors = [
-  {name = "Nio"},
+  {name = "ddnio"},
   {name = "Tw93"}
 ]

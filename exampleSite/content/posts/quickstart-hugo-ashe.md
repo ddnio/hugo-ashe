@@ -11,7 +11,7 @@ summary = "从安装主题到本地预览，快速完成 hugo-ashe 的最小可�
 
 ```bash
 # 1) 在你的 Hugo 站点引入主题
-git submodule add https://github.com/nio/hugo-ashe.git themes/hugo-ashe
+git submodule add https://github.com/ddnio/hugo-ashe.git themes/hugo-ashe
 
 # 2) 配置主题
 # theme = "hugo-ashe"

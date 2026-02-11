@@ -1,4 +1,4 @@
-baseURL = "https://nio.github.io/hugo-ashe/"
+baseURL = "https://ddnio.github.io/hugo-ashe/"
 languageCode = "zh-CN"
 title = "hugo-ashe Theme Demo"
 theme = "hugo-ashe"
@@ -12,10 +12,9 @@ home = ["HTML", "RSS", "JSON"]
 
 [params]
 description = "hugo-ashe：用于个人网站与内容站点的 Hugo 主题工具箱"
-name = "Nio"
-github = "nio"
-repo = "nio/hugo-ashe"
-twitter = "ddnio"
+name = "hugo-ashe Demo"
+github = "ddnio"
+repo = "ddnio/hugo-ashe"
 
 [params.busuanzi]
 enable = false

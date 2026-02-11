@@ -1,20 +1,20 @@
 # hugo-ashe
 
-[![CI](https://github.com/nio/hugo-ashe/actions/workflows/ci.yml/badge.svg)](https://github.com/nio/hugo-ashe/actions/workflows/ci.yml)
-[![Deploy Demo](https://github.com/nio/hugo-ashe/actions/workflows/pages.yml/badge.svg)](https://github.com/nio/hugo-ashe/actions/workflows/pages.yml)
+[![CI](https://github.com/ddnio/hugo-ashe/actions/workflows/ci.yml/badge.svg)](https://github.com/ddnio/hugo-ashe/actions/workflows/ci.yml)
+[![Deploy Demo](https://github.com/ddnio/hugo-ashe/actions/workflows/pages.yml/badge.svg)](https://github.com/ddnio/hugo-ashe/actions/workflows/pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 
 `hugo-ashe` 是一个面向个人网站与内容站点的 Hugo 主题工具箱。
 
-它强调三件事：
+设计目标：
 
-- **开箱可用**：最小配置可直接上线
-- **内容优先**：阅读、检索、归档体验清晰
-- **工程化维护**：提供 CI 与展示站点自动发布
+- 开箱可用：最小配置即可跑起来
+- 内容优先：写作、检索、归档体验优先
+- 工程化维护：自带 CI 与 Demo 自动发布
 
 ## 在线展示
 
-- Demo Site: [https://nio.github.io/hugo-ashe/](https://nio.github.io/hugo-ashe/)
+- Demo Site: [https://ddnio.github.io/hugo-ashe/](https://ddnio.github.io/hugo-ashe/)
 - Demo Source: [`exampleSite/`](./exampleSite)
 
 ## 参考与致谢
@@ -28,31 +28,39 @@
 ## 功能概览
 
 - 内容流式首页（文章列表 + 分页）
-- 文章详情页（分类、推荐阅读）
+- 文章详情页（分类 + Read More）
 - 站内搜索（基于 `index.json`）
 - 图片灯箱（PhotoSwipe）
 - 代码块复制按钮
 - Giscus 评论（可选）
 - 统计脚本（可选）
 
-## 快速开始
+## 环境要求
 
-### 1. 安装主题
+- Hugo Extended `>= 0.127.0`
 
-在你的 Hugo 站点中执行：
+可用命令检查：
+
+```bash
+hugo version
+```
+
+## 快速开始（已有 Hugo 站点）
+
+### 1) 安装主题
 
 ```bash
 cd /path/to/your-site
-git submodule add https://github.com/nio/hugo-ashe.git themes/hugo-ashe
+git submodule add https://github.com/ddnio/hugo-ashe.git themes/hugo-ashe
 ```
 
-### 2. 启用主题
+### 2) 启用主题
 
 ```toml
 theme = "hugo-ashe"
 ```
 
-### 3. 最小配置
+### 3) 最小配置（必须含 JSON 输出）
 
 ```toml
 baseURL = "https://example.com/"
@@ -74,9 +82,25 @@ enable = false
 scriptURL = "//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"
 ```
 
-### 4. 本地预览
+### 4) 本地运行
 
 ```bash
+hugo server
+```
+
+## 快速开始（从零新建站点）
+
+```bash
+hugo new site mysite
+cd mysite
+git init
+git submodule add https://github.com/ddnio/hugo-ashe.git themes/hugo-ashe
+```
+
+将上面的“最小配置”写入 `hugo.toml` 后：
+
+```bash
+hugo new content posts/hello.md
 hugo server
 ```
 
@@ -108,7 +132,7 @@ repo = "your-github-id/your-repo"
 在本仓库内使用示例站点开发：
 
 ```bash
-# 启动开发预览
+# 启动预览
 hugo server --source exampleSite --themesDir ../.. --theme hugo-ashe
 
 # 构建检查
@@ -117,7 +141,7 @@ hugo --source exampleSite --themesDir ../.. --theme hugo-ashe --minify
 
 ## 自动化工作流
 
-本仓库内置两个 GitHub Actions：
+仓库内置 2 个 GitHub Actions：
 
 - `CI`：在 `push` / `pull_request` 时验证主题可构建
 - `Deploy Demo`：在 `main` 分支推送后自动发布 `exampleSite` 到 GitHub Pages
@@ -126,6 +150,25 @@ hugo --source exampleSite --themesDir ../.. --theme hugo-ashe --minify
 
 - [`.github/workflows/ci.yml`](./.github/workflows/ci.yml)
 - [`.github/workflows/pages.yml`](./.github/workflows/pages.yml)
+
+## 常见问题
+
+### Demo 访问 404
+
+优先检查：
+
+1. 仓库 `Settings -> Pages` 是否启用 `GitHub Actions`
+2. `Deploy Demo` 工作流最近一次是否成功
+3. 是否使用了正确链接：`https://ddnio.github.io/hugo-ashe/`
+
+### 搜索无结果
+
+确保站点配置包含：
+
+```toml
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+```
 
 ## 目录结构
 

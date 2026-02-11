@@ -5,7 +5,7 @@
 ## 本地开发
 
 ```bash
-git clone https://github.com/nio/hugo-ashe.git
+git clone https://github.com/ddnio/hugo-ashe.git
 cd hugo-ashe
 hugo server --source exampleSite --themesDir ../.. --theme hugo-ashe
 ```
