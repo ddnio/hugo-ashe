@@ -1,0 +1,19 @@
+{{ define "main" }}
+{{ $terms := .Data.Terms.Alphabetical }}
+{{ $isTag := eq .Data.Plural "tags" }}
+<section class="terms-container">
+  <h1 class="entry-title terms-title">{{ .Title }}</h1>
+  {{ if gt (len $terms) 0 }}
+  <div class="terms-grid">
+    {{ range $terms }}
+    <a class="term-chip header-href" href="{{ .Page.RelPermalink }}">
+      <span class="term-name">{{ if $isTag }}#{{ end }}{{ .Page.LinkTitle }}</span>
+      <span class="term-count">{{ .Count }}</span>
+    </a>
+    {{ end }}
+  </div>
+  {{ else }}
+  <p class="terms-empty">No {{ .Data.Plural }} yet.</p>
+  {{ end }}
+</section>
+{{ end }}

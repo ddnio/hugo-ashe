@@ -434,6 +434,66 @@ o-repeat;
     }
   }
 
+  .terms-container {
+    margin: 15px 0;
+    padding: 18px 15px;
+    background-color: $white;
+    @media #{$medium} {
+      margin: 0 0 30px;
+      padding: 24px 30px;
+      border-radius: $border-radius;
+    }
+    @media #{$large} {
+      padding: 32px 50px;
+      margin-bottom: 34px;
+    }
+  }
+
+  .terms-title {
+    margin: 0 0 16px;
+  }
+
+  .terms-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .term-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: calc($border-radius / 2);
+    padding: 4px 10px;
+    background-color: #f5f8ff;
+    color: #334155;
+    &:hover {
+      background-color: #e8eefc;
+    }
+  }
+
+  .term-name {
+    font-size: 14px;
+  }
+
+  .term-count {
+    display: inline-block;
+    min-width: 20px;
+    text-align: center;
+    padding: 0 6px;
+    border-radius: 999px;
+    font-size: 12px;
+    line-height: 20px;
+    color: #3a5aa9;
+    background-color: #fff;
+    border: 1px solid #dbe3f3;
+  }
+
+  .terms-empty {
+    margin: 0;
+    color: #6b7280;
+  }
+
   .post-card-link {
     color: $text-color;
   }

@@ -27,4 +27,14 @@ if [[ ! -f "$BUILD_DIR/tags/hugo/index.html" ]]; then
   exit 1
 fi
 
+if ! grep -q 'term-count' "$BUILD_DIR/tags/index.html"; then
+  echo "expected tag count on tags index page"
+  exit 1
+fi
+
+if grep -q 'post-card' "$BUILD_DIR/tags/index.html"; then
+  echo "expected tags index to render terms, not post cards"
+  exit 1
+fi
+
 echo "tag feature checks passed"
