@@ -4,6 +4,10 @@
 window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
 document.addEventListener("DOMContentLoaded", function () {
+  var asheConfig = window.__HUGO_ASHE_CONFIG__ || {};
+  var photoswipeCSSURL = asheConfig.photoswipeCSSURL || "/css/photoswipe.css";
+  var photoswipeJSURL = asheConfig.photoswipeJSURL || "/js/photoswipe.umd.min.js";
+  var photoswipeLightboxJSURL = asheConfig.photoswipeLightboxJSURL || "/js/photoswipe-lightbox.umd.min.js";
 
   var zoomImgs = Array.prototype.slice.call(document.querySelectorAll('.entry-content img'));
   if (zoomImgs.length > 0) {
@@ -40,10 +44,10 @@ document.addEventListener("DOMContentLoaded", function () {
         document.head.appendChild(link);
       };
 
-      loadCSS("/css/photoswipe.css");
+      loadCSS(photoswipeCSSURL);
 
-      loadScript("/js/photoswipe.umd.min.js", function () {
-        loadScript("/js/photoswipe-lightbox.umd.min.js", function () {
+      loadScript(photoswipeJSURL, function () {
+        loadScript(photoswipeLightboxJSURL, function () {
           if (typeof PhotoSwipeLightbox === 'undefined' || typeof PhotoSwipe === 'undefined') return;
 
           var lightbox = new PhotoSwipeLightbox({

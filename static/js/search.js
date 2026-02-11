@@ -1,6 +1,9 @@
 (function() {
   'use strict';
 
+  const asheConfig = window.__HUGO_ASHE_CONFIG__ || {};
+  const searchIndexURL = asheConfig.searchIndexURL || '/index.json';
+
   let searchData = [];
   let searchModal, searchInput, searchResults, searchBtn, searchClose;
   let selectedIndex = -1;
@@ -107,7 +110,7 @@
 
   // Load search data
   function loadSearchData() {
-    fetch('/index.json')
+    fetch(searchIndexURL)
       .then(response => response.json())
       .then(data => {
         searchData = data;
@@ -133,19 +136,31 @@
       return;
     }
 
-    // Detect current page language
-    const isEnglishPage = window.location.pathname.includes('/en/');
+    const currentLanguage = (
+      document.documentElement.lang ||
+      asheConfig.languageCode ||
+      ''
+    ).toLowerCase();
 
-    // Filter articles by language
-    const filteredData = isEnglishPage
-      ? searchData.filter(post => post.lang === 'en-US')
-      : searchData.filter(post => post.lang === 'zh-CN');
+    let filteredData = searchData;
+    if (currentLanguage) {
+      const sameLanguagePosts = searchData.filter(post =>
+        String(post.lang || '').toLowerCase() === currentLanguage
+      );
+      if (sameLanguagePosts.length > 0) {
+        filteredData = sameLanguagePosts;
+      }
+    }
 
     const results = filteredData.filter(post => {
-      return post.title.toLowerCase().includes(query) ||
-             post.summary.toLowerCase().includes(query) ||
-             post.content.toLowerCase().includes(query) ||
-             post.categories.some(cat => cat.toLowerCase().includes(query));
+      const title = String(post.title || '').toLowerCase();
+      const summary = String(post.summary || '').toLowerCase();
+      const content = String(post.content || '').toLowerCase();
+      const categories = Array.isArray(post.categories) ? post.categories : [];
+      return title.includes(query) ||
+             summary.includes(query) ||
+             content.includes(query) ||
+             categories.some(cat => String(cat).toLowerCase().includes(query));
     });
 
     displayResults(results, query);
@@ -166,19 +181,26 @@
     }
 
     const html = results.slice(0, 10).map((post, index) => {
-      const highlightedTitle = highlightText(post.title, query);
-      const highlightedSummary = highlightText(post.summary || post.content, query);
-      const category = post.categories[0] || '';
+      const categories = Array.isArray(post.categories) ? post.categories : [];
+      const category = categories[0] || '';
+      const safeURL = escapeHtml(post.url || '#');
+      const highlightedTitle = highlightText(escapeHtml(post.title || ''), query);
+      const highlightedSummary = highlightText(
+        escapeHtml(post.summary || post.content || ''),
+        query
+      );
+      const safeCategory = escapeHtml(category);
+      const safeDate = escapeHtml(post.date || '');
 
       return `
-        <a href="${post.url}" class="search-result-item" data-index="${index}" role="option">
+        <a href="${safeURL}" class="search-result-item" data-index="${index}" role="option">
           <div class="search-result-content">
             <div class="search-result-title">${highlightedTitle}</div>
             <div class="search-result-summary">${highlightedSummary}</div>
           </div>
           <div class="search-result-meta">
-            ${category ? `<span class="search-result-category">${category}</span>` : ''}
-            <span class="search-result-date">${post.date}</span>
+            ${safeCategory ? `<span class="search-result-category">${safeCategory}</span>` : ''}
+            <span class="search-result-date">${safeDate}</span>
           </div>
         </a>
       `;
@@ -205,6 +227,15 @@
   // Escape regex special characters
   function escapeRegex(str) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
   }
 
   // Navigate results

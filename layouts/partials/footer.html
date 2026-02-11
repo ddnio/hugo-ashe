@@ -1,4 +1,8 @@
 {{ $repo := site.Params.repo | default site.Params.giscus.repo }}
+{{ $searchIndexURL := "index.json" | relURL }}
+{{ $photoswipeCSSURL := "css/photoswipe.css" | relURL }}
+{{ $photoswipeJSURL := "js/photoswipe.umd.min.js" | relURL }}
+{{ $photoswipeLightboxJSURL := "js/photoswipe-lightbox.umd.min.js" | relURL }}
 <div class="footer-wrapper">
   <footer role="contentinfo">
     {{ with site.Params.github }}
@@ -34,6 +38,15 @@
   </footer>
 </div>
 
+<script>
+  window.__HUGO_ASHE_CONFIG__ = {
+    searchIndexURL: {{ $searchIndexURL | jsonify }},
+    photoswipeCSSURL: {{ $photoswipeCSSURL | jsonify }},
+    photoswipeJSURL: {{ $photoswipeJSURL | jsonify }},
+    photoswipeLightboxJSURL: {{ $photoswipeLightboxJSURL | jsonify }},
+    languageCode: {{ (site.LanguageCode | default `zh-CN`) | jsonify }}
+  };
+</script>
 <script src="{{ `js/index.js` | relURL }}" defer></script>
 <script src="{{ `js/search.js` | relURL }}" defer></script>
 

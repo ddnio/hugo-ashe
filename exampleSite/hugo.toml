@@ -1,0 +1,38 @@
+baseURL = "https://nio.github.io/hugo-ashe/"
+languageCode = "zh-CN"
+title = "hugo-ashe Theme Demo"
+theme = "hugo-ashe"
+enableRobotsTXT = true
+
+[pagination]
+pagerSize = 10
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+
+[params]
+description = "hugo-ashe：用于个人网站与内容站点的 Hugo 主题工具箱"
+name = "Nio"
+github = "nio"
+repo = "nio/hugo-ashe"
+twitter = "ddnio"
+
+[params.busuanzi]
+enable = false
+scriptURL = "//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"
+
+[menu]
+[[menu.main]]
+name = "Guide"
+url = "/posts/hugo-ashe-theme-toolkit/"
+weight = 1
+
+[[menu.main]]
+name = "Posts"
+url = "/posts/"
+weight = 2
+
+[[menu.main]]
+name = "About"
+url = "/about/"
+weight = 3
